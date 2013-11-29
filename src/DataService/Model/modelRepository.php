@@ -9,21 +9,16 @@ class InMemoryModelRepository implements ModelInterface
 {
     private $model;
 
-    public function __construct()
+    public function __construct(Model $model)
     {
-        $this->model[] = new Model('Toto', 'test de la description toto', "filter to",
-                                    new Property('name1', 'description name1', 'string', 'pattern1')
-        );
-        $this->model[] = new Model('Titi', 'test de la description titi', "filter ti",
-                                    new Property('name2', 'description name2', 'string', 'pattern2')
-        );
+       $this->model[]=$model;
     }
 
-    public function find(Model $model)
+    public function find(Model $modele)
     {
         for($i=0;$i<count($this->model);$i++)
         {
-            if($this->model[$i] == $model)
+            if(strcmp($this->model[$i]->getName(), $modele->getName()) == 0 )
             {
                 return $this->model[$i];
             }
@@ -33,13 +28,14 @@ class InMemoryModelRepository implements ModelInterface
 
     public function findBy(Property $property)
     {
+        $models = array();
         for($i=0;$i<count($this->model);$i++)
         {
-            for ($j=0; $j<$this->model ; $j++)
+            for ($j=0; $j<count($this->model[$i]->getProperties()) ; $j++)
             {
-                if(($this->model[$i])->getProperty($j) == $property)
+                if($this->model[$i]->getProperty($j)->getName() == $property->getName())
                 {
-                    return ($this->model[$i])->getProperty($j);
+                    return $this->model[$i];
                 }
             }
         }
@@ -64,13 +60,13 @@ class InMemoryModelRepository implements ModelInterface
             {
                 unset($this->model[$i]);
                 $this->model = array_merge($this->model);
-                //$this->affichage();
+                //$this->display();
             }
         }
     }
 
-    public function affichage()
+    public function display()
     {
-        print_r($this->model);
+        var_dump($this->model);
     }
 }
