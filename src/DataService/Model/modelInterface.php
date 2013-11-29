@@ -1,6 +1,6 @@
 <?php
 
-namespace DataService\Model;
+//namespace DataService\Model;
 
 interface ModelInterface
 {
