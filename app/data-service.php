@@ -16,7 +16,7 @@ $app->get('/', function () {
 
 // Request created for testing
 $request = Request::create('','',array(), array(), array(), array(),
-    '{"model": { "properties": {"firstName":{"type":"string"}, "lastName":{"type":"string", "description":"Nom de la personne"}, "age":{"type":"integer"}}, "metadata":{"name":{"value":"2132", "type":"string"}, "description": { "value":"Des personnes", "type":"string"}}}}');
+    '{"model": { "properties": {"firstName":{"type":"string"}, "lastName":{"type":"string", "description":"Nom de la personne"}, "age":{"type":"integer"}}, "metadata":{"name":{"value":"People", "type":"string"}, "description": { "value":"Des personnes", "type":"string"}}}}');
 $request->headers->set('Accept', array('application/json'));
 $request->headers->set('content_type', array('application/json'));
 
@@ -228,7 +228,6 @@ $app->post('/models', function () use ($request, $app) {
     else {
         $model = new Model($name, $description, $properties, $filters);
         $errors = $app['validator']->validate($model);
-
         if (count($errors) > 0) {
             echo 'Model errors: <br/>';
             foreach ($errors as $error) {

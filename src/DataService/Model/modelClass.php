@@ -56,7 +56,7 @@ class Model
     {
         $metadata->addPropertyConstraint('name', new Assert\NotBlank());
         $metadata->addPropertyConstraint('name', new Assert\Regex(array(
-            'pattern'   => '/^[a-zA-Z0-9]$/',
+            'pattern'   => '/^[a-zA-Z0-9]*$/',
             'message'   => 'Your model name cannot contain a blank space.'
         )));
     }
