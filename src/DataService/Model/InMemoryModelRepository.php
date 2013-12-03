@@ -24,7 +24,6 @@ class InMemoryModelRepository implements ModelRepositoryInterface
                 return $model;
             }
         }
-
         return null;
     }
 
@@ -41,15 +40,15 @@ class InMemoryModelRepository implements ModelRepositoryInterface
      */
     public function findBy(Property $property)
     {
-        //$models = array();
+        $modelList = array();
         foreach($this->models as $key => $value){
             foreach ($this->models[$key]->getProperties() as $key2 => $value2){
                 if($this->models[$key]->getProperty($key2)->getName() == $property->getName()){
-                    return $this->models[$key];
+                    $modelList[] = $this->models[$key];
                 }
             }
         }
-        return null;
+        return $modelList;
     }
 
     /**

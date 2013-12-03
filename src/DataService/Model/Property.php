@@ -28,23 +28,23 @@ class Property
 		return $this->name;
 	}
 
-	public function getDescription()
-	{
-		return $this->description;
-	}
-
 	public function getType()
 	{
 		return $this->type;
 	}
 
-	public function getFormat()
+	public function getDescription()
 	{
-		return $this->format;
+		return $this->description;
 	}
 
 	public function getPattern()
 	{
 		return $this->pattern;
+	}
+
+	public function getFormat()
+	{
+		return $this->format;
 	}
 }
