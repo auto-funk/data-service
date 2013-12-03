@@ -6,6 +6,7 @@
         "willdurand/negotiation": "~1.0",
         "kphoen/negotiation-service-provider": "~1.0",
         "kphoen/faker-service-provider": "~1.0",
+        "symfony/validator": "~2.3",
         "pomm/pomm": "~1.2@dev",
         "pomm/pomm-service-provider":  "~1.2@dev"
     },

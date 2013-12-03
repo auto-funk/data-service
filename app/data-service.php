@@ -15,8 +15,10 @@ $app->get('/', function () {
 });
 
 // Request created for testing
-$request = Request::create('','',array(), array(), array(), array(),
-    '{"model": { "properties": {"firstName":{"type":"string"}, "lastName":{"type":"string", "description":"Nom de la personne"}, "age":{"type":"integer"}}, "metadata":{"name":{"value":"People", "type":"string"}, "description": { "value":"Des personnes", "type":"string"}}}}');
+$request = Request::create('POST','',array(), array(), array(), array(),
+    '{"model": {"metadata":{"name":{"value":"People", "type":"string"}, "description": { "value":"Des personnes", "type":"string"}}}}');/*
+$request = Request::create('POST','',array(), array(), array(), array(),
+    '{"model": { "properties": {"firstName":{"type":"string"}, "lastName":{"type":"string", "description":"Nom de la personne"}, "age":{"type":"integer"}}, "metadata":{"name":{"value":"People", "type":"string"}, "description": { "value":"Des personnes", "type":"string"}}}}');*/
 $request->headers->set('Accept', array('application/json'));
 $request->headers->set('content_type', array('application/json'));
 
@@ -28,7 +30,8 @@ $before = function () use ($request) {
 };
 
 $app->post('/models', function () use ($request, $app) {
-    $model = json_decode($request->getContent());
+    $model = $request->request->model;
+
     $right = false;
     if ($model != null){
         $filters = null;
