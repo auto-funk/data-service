@@ -1,13 +1,14 @@
 <?php
 
+namespace DataService\Test;
+
 use DataService\Model\InMemoryModelRepository;
 use DataService\Model\Model;
 use DataService\Model\Property;
 
-class PropertyTest extends PHPUnit_Framework_TestCase
+class InMemoryModelRepositoryTest extends PHPUnit_Framework_TestCase
 {
     private $modelRepo;
-
 
     public function testFind()
     {
@@ -72,7 +73,6 @@ class PropertyTest extends PHPUnit_Framework_TestCase
         $this->assertCount($nbModels - 1, $this->modelRepo->findAll());
         $this->assertNull($this->modelRepo->find("Titi"));
     }
-
 
     protected function setUp()
     {
