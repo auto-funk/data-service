@@ -5,25 +5,22 @@ namespace DataService\Model;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Property
+class Model
 {
 	private $name;
 
-	private $type;
-
 	private $description;
 
-	private $pattern;
+	private $properties;
 
-	private $format;
+	private $filters;
 
-	public function __construct($name, $type, $description = null, $pattern = null, $format = null)
+	public function __construct($name, $description = null, array $properties = array(), array $filters = array())
 	{
-		$this->name 		= $name;
-		$this->type 		= $type;
-		$this->description 	= $description;
-		$this->pattern 		= $pattern;
-		$this->format 		= $format;
+		$this->name 	   = $name;
+		$this->description = $description;
+		$this->properties  = $properties;
+		$this->filters 	   = $filters;
 	}
 
     public static function loadValidatorMetadata(ClassMetadata $metadata) {
@@ -36,17 +33,17 @@ class Property
             'message'   => 'This value should not contain a blank space.'
         )));
 
-        $metadata->addPropertyConstraint('type', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('type', new Assert\Type(array(
-            'type'  =>  'string'
-        )));
-        $metadata->addPropertyConstraint('type', new Assert\Regex(array(
-            'pattern'   => '/^[a-zA-Z0-9]*$/',
-            'message'   => 'This value should not contain a blank space.'
-        )));
-
         $metadata->addPropertyConstraint('description', new Assert\Type(array(
             'type'  =>  'string'
+        )));
+
+        $metadata->addPropertyConstraint('properties', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('properties', new Assert\Type(array(
+            'type'  =>  'array'
+        )));
+
+        $metadata->addPropertyConstraint('filters', new Assert\Type(array(
+            'type'  =>  'array'
         )));
     }
 
@@ -60,18 +57,18 @@ class Property
 		return $this->description;
 	}
 
-	public function getType()
+	public function getFilters()
 	{
-		return $this->type;
+		return $this->filters;
 	}
 
-	public function getFormat()
+	public function getProperties()
 	{
-		return $this->format;
+		return $this->properties;
 	}
 
-	public function getPattern()
+	public function getProperty($key, $default = null)
 	{
-		return $this->pattern;
+		return isset($this->properties[$key]) ? $this->properties[$key] : $default;
 	}
 }

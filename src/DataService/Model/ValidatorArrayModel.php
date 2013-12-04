@@ -15,16 +15,15 @@ class ValidatorArrayModel {
 
     private $filtersFromJSON;
 
-
     private $model;
 
-    private $properties;
+    private $properties = array();
 
     private $name;
 
     private $description;
 
-    private $filters;
+    private $filters = array();
 
 
     public function __construct(array $arrayJSON) {
@@ -52,7 +51,6 @@ class ValidatorArrayModel {
     }
 
     private function verifyPropertiesFromJSON() {
-        $this->properties = array();
         if (!is_array($this->propertiesFromJSON)) {
             $this->propertiesFromJSON = null;
         }
@@ -72,48 +70,54 @@ class ValidatorArrayModel {
         if (!is_array($array)) {
             return null;
         }
+        $type = null;
+        $description = null;
+        $pattern = null;
+        $format = null;
         foreach ($array as $key => $value) {
-            $type = $this->recoverTypeProperty($key, $value);
-            $description = $this->recoverDescriptionProperty($key, $value);
-            $pattern = $this->recoverPatternProperty($key, $value);
-            $format = $this->recoverFormatProperty($key, $value);
+            $type = $this->recoverTypeProperty($key, $value, $type);
+            $description = $this->recoverDescriptionProperty($key, $value, $description);
+            $pattern = $this->recoverPatternProperty($key, $value, $pattern);
+            $format = $this->recoverFormatProperty($key, $value, $format);
         }
         $property = new Property($name, $type, $description, $pattern, $format);
         return $property;
     }
 
     private function addProperty($property) {
-        /** Est ce qu'on permet a l'user de creer un model meme si une propriété est fausse, et du coup enlevé */
         if ($property === null) {
-            return;
+            array_push($this->properties, new Property(null, null));
         }
         array_push($this->properties, $property);
     }
 
-    private function recoverTypeProperty($key, $value) {
+    private function recoverTypeProperty($key, $value, $type) {
         if (strcmp($key, 'type') === 0) {
             return $value;
         }
+        return $type;
     }
 
-    private function recoverDescriptionProperty($key, $value) {
+    private function recoverDescriptionProperty($key, $value, $description) {
         if (strcmp($key, 'description') === 0) {
             return $value;
         }
+        return $description;
     }
 
-    private function recoverPatternProperty($key, $value) {
+    private function recoverPatternProperty($key, $value, $pattern) {
         if (strcmp($key, 'pattern') === 0) {
             return $value;
         }
+        return $pattern;
     }
 
-    private function recoverFormatProperty($key, $value) {
+    private function recoverFormatProperty($key, $value, $format) {
         if (strcmp($key, 'format') === 0) {
             return $value;
         }
+        return $format;
     }
-
 
     /**
      * Metadata part.
@@ -176,13 +180,11 @@ class ValidatorArrayModel {
         $this->description = $value;
     }
 
-
     /**
      * Filters part.
      */
 
     private function createFiltersFromJSON() {
-        $this->filters = array();
         if (isset($this->arrayJSON['model']['filters'])) {
             $this->filtersFromJSON = $this->arrayJSON['model']['filters'];
             $this->verifyFiltersFromJSON();
@@ -205,12 +207,28 @@ class ValidatorArrayModel {
         }
     }
 
+    /**
+     * Getters.
+     */
+
     public function getArrayJSON() {
         return $this->arrayJSON;
     }
 
+    public function getPropertiesFromJSON() {
+        return $this->propertiesFromJSON;
+    }
+
+    public function getMetadataFromJSON() {
+        return $this->metadataFromJSON;
+    }
+
     public function getModel() {
         return $this->model;
+    }
+
+    public function getProperties() {
+        return $this->properties;
     }
 
 }
