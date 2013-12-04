@@ -4,7 +4,7 @@ namespace DataService\Model;
 
 interface ModelRepositoryInterface
 {
-	/**
+    /**
      * Return the model which contain the research property.
      *
      * @param Property $property

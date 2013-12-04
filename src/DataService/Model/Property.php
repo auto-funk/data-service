@@ -4,47 +4,47 @@ namespace DataService\Model;
 
 class Property
 {
-	private $name;
+    private $name;
 
-	private $type;
+    private $type;
 
-	private $description;
+    private $description;
 
-	private $pattern;
+    private $pattern;
 
-	private $format;
+    private $format;
 
-	public function __construct($name, $type, $description = null, $pattern = null, $format = null)
-	{
-		$this->name 		= $name;
-		$this->type 		= $type;
-		$this->description 	= $description;
-		$this->pattern 		= $pattern;
-		$this->format 		= $format;
-	}
+    public function __construct($name, $type, $description = null, $pattern = null, $format = null)
+    {
+        $this->name 		= $name;
+        $this->type 		= $type;
+        $this->description 	= $description;
+        $this->pattern 		= $pattern;
+        $this->format 		= $format;
+    }
 
-	public function getName()
-	{
-		return $this->name;
-	}
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	public function getType()
-	{
-		return $this->type;
-	}
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-	public function getPattern()
-	{
-		return $this->pattern;
-	}
+    public function getPattern()
+    {
+        return $this->pattern;
+    }
 
-	public function getFormat()
-	{
-		return $this->format;
-	}
+    public function getFormat()
+    {
+        return $this->format;
+    }
 }

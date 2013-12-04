@@ -19,11 +19,12 @@ class InMemoryModelRepository implements ModelRepositoryInterface
      */
     public function find($name)
     {
-        foreach($this->models as $model) {
+        foreach ($this->models as $model) {
             if (strcmp($model->getName(), $name) === 0) {
                 return $model;
             }
         }
+
         return null;
     }
 
@@ -41,13 +42,14 @@ class InMemoryModelRepository implements ModelRepositoryInterface
     public function findBy(Property $property)
     {
         $modelList = array();
-        foreach($this->models as $key => $value){
-            foreach ($this->models[$key]->getProperties() as $key2 => $value2){
-                if($this->models[$key]->getProperty($key2)->getName() == $property->getName()){
+        foreach ($this->models as $key => $value) {
+            foreach ($this->models[$key]->getProperties() as $key2 => $value2) {
+                if ($this->models[$key]->getProperty($key2)->getName() == $property->getName()) {
                     $modelList[] = $this->models[$key];
                 }
             }
         }
+
         return $modelList;
     }
 
@@ -64,8 +66,8 @@ class InMemoryModelRepository implements ModelRepositoryInterface
      */
     public function remove(Model $model)
     {
-        foreach($this->models as $key => $value){
-            if($value == $model){
+        foreach ($this->models as $key => $value) {
+            if ($value == $model) {
                 unset($this->models[$key]);
                 $this->models = array_merge($this->models);
             }
