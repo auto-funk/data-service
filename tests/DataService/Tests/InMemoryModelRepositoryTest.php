@@ -1,12 +1,12 @@
 <?php
 
-namespace DataService\Test;
+namespace DataService\Tests;
 
 use DataService\Model\InMemoryModelRepository;
 use DataService\Model\Model;
 use DataService\Model\Property;
 
-class InMemoryModelRepositoryTest extends PHPUnit_Framework_TestCase
+class InMemoryModelRepositoryTest extends TestCase
 {
     private $modelRepo;
 
@@ -79,14 +79,14 @@ class InMemoryModelRepositoryTest extends PHPUnit_Framework_TestCase
         $this->modelRepo = new InMemoryModelRepository($this->getModels());
     }
 
-     /**
+    /**
      *  Return model list
      */
     protected function getModels()
     {
         $listProperty1 = [
-                 new Property('name1', 'string', 'description name1', 'pattern1')
-            ];
+            new Property('name1', 'string', 'description name1', 'pattern1')
+        ];
         $model1 = new Model('Tata', 'test de la description tata', $listProperty1,['filter taa']);
 
         $property2 = new Property('name2', 'string', 'description name2', 'pattern2');
