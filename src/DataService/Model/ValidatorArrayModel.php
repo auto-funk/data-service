@@ -227,6 +227,10 @@ class ValidatorArrayModel {
         return $this->model;
     }
 
+    public function getName() {
+        return $this->name;
+    }
+
     public function getProperties() {
         return $this->properties;
     }

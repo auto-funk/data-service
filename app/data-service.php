@@ -77,7 +77,7 @@ $app->post('/models', function () use ($request, $app) {
         return new Response('Json data badly written: Problem in properties', 400);
     }
 
-    return 'dfds';
+    return new Response('Model '.$validatorModel->getName().' validated', 200);
 })
 ->before($before)
 ->method('POST|GET');
