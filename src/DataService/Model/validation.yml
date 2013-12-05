@@ -1,0 +1,39 @@
+DataService\Model\Model:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type:
+                type: string
+            - Regex:
+                pattern: '/^[a-zA-Z0-9]*$/'
+                message: This value should not contain a blank space.
+        description:
+            - Type:
+                type: string
+        properties:
+            - NotBlank: ~
+            - Type:
+                 type: array
+        filters:
+             - Type:
+                 type: array
+
+DataService\Model\Property:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type:
+                type: string
+            - Regex:
+                pattern: '/^[a-zA-Z0-9]*$/'
+                message: This value should not contain a blank space.
+        type:
+            - NotBlank: ~
+            - Type:
+                type: string
+            - Regex:
+                pattern: '/^[a-zA-Z0-9]*$/'
+                message: This value should not contain a blank space.
+        description:
+            - Type:
+                type: string

@@ -26,30 +26,6 @@ class Property
 		$this->format 		= $format;
 	}
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) {
-        $metadata->addPropertyConstraint('name', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('name', new Assert\Type(array(
-            'type'  =>  'string'
-        )));
-        $metadata->addPropertyConstraint('name', new Assert\Regex(array(
-            'pattern'   => '/^[a-zA-Z0-9]*$/',
-            'message'   => 'This value should not contain a blank space.'
-        )));
-
-        $metadata->addPropertyConstraint('type', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('type', new Assert\Type(array(
-            'type'  =>  'string'
-        )));
-        $metadata->addPropertyConstraint('type', new Assert\Regex(array(
-            'pattern'   => '/^[a-zA-Z0-9]*$/',
-            'message'   => 'This value should not contain a blank space.'
-        )));
-
-        $metadata->addPropertyConstraint('description', new Assert\Type(array(
-            'type'  =>  'string'
-        )));
-    }
-
 	public function getName()
 	{
 		return $this->name;

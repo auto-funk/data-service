@@ -23,30 +23,6 @@ class Model
 		$this->filters 	   = $filters;
 	}
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) {
-        $metadata->addPropertyConstraint('name', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('name', new Assert\Type(array(
-            'type'  =>  'string'
-        )));
-        $metadata->addPropertyConstraint('name', new Assert\Regex(array(
-            'pattern'   => '/^[a-zA-Z0-9]*$/',
-            'message'   => 'This value should not contain a blank space.'
-        )));
-
-        $metadata->addPropertyConstraint('description', new Assert\Type(array(
-            'type'  =>  'string'
-        )));
-
-        $metadata->addPropertyConstraint('properties', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('properties', new Assert\Type(array(
-            'type'  =>  'array'
-        )));
-
-        $metadata->addPropertyConstraint('filters', new Assert\Type(array(
-            'type'  =>  'array'
-        )));
-    }
-
 	public function getName()
 	{
 		return $this->name;
