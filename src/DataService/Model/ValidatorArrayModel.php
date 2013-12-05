@@ -234,5 +234,4 @@ class ValidatorArrayModel {
     public function getProperties() {
         return $this->properties;
     }
-
 }
