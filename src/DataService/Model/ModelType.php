@@ -15,7 +15,13 @@ class ModelType extends AbstractType {
 
         $builder->add('name')
                 ->add('description')
-                ->add('properties', 'collection', array('type'  => new PropertyType()));
+                ->add('properties', 'collection', array(
+                        'type'  => 'text',
+                        'options'   => array(
+                            'label'  =>  new PropertyType()
+                        ),
+                        'allow_add' => true
+                        ));
 //                ->add('filters', 'collection', );
     }
 

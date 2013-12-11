@@ -2,9 +2,6 @@
 
 namespace DataService\Model;
 
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Constraints as Assert;
-
 class Model
 {
 	private $name;
@@ -28,10 +25,18 @@ class Model
 		return $this->name;
 	}
 
+    public function setName($name) {
+        $this->name = $name;
+    }
+
 	public function getDescription()
 	{
 		return $this->description;
 	}
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
 
 	public function getFilters()
 	{
@@ -47,4 +52,14 @@ class Model
 	{
 		return isset($this->properties[$key]) ? $this->properties[$key] : $default;
 	}
+
+    public function addProperty($property) {
+        array_push($this->properties, $property);
+    }
+
+    public function removeProperty($key) {
+        if ($property = $this->getProperty($key) != null) {
+            unset($property);
+        }
+    }
 }
