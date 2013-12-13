@@ -4,38 +4,26 @@ namespace DataService\Model;
 
 class Model
 {
-	private $name;
-
-	private $description;
+    private $metadata;
 
 	private $properties;
 
 	private $filters;
 
-	public function __construct($name, $description = null, array $properties = array(), array $filters = array())
-	{
-		$this->name 	   = $name;
-		$this->description = $description;
-		$this->properties  = $properties;
-		$this->filters 	   = $filters;
-	}
-
-	public function getName()
-	{
-		return $this->name;
-	}
-
-    public function setName($name) {
-        $this->name = $name;
+    public function __construct(array $metadata = array(), array $properties = array(), array $filters = array())
+    {
+        $this->metadata    = $metadata;
+        $this->properties  = $properties;
+        $this->filters 	   = $filters;
     }
 
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
 
-    public function setDescription($description) {
-        $this->description = $description;
+    public function setMetadata($metadata) {
+        $this->metadata = $metadata;
     }
 
 	public function getFilters()
