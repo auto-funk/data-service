@@ -22,10 +22,12 @@ class ControllerTest extends WebTestCase
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
-    public function testPostShouldReturn201IfGoodRequest()
+    public function testPost()
     {
         $client  = $this->createClient();
-        $client->request('POST', '/models', array(), array(), array(), <<<JSON
+        $client->request('POST', '/models', array(), array(), array(
+                'CONTENT_TYPE'  => 'application/json'
+            ), <<<JSON
 {
     "model": {
         "properties": [
@@ -50,7 +52,7 @@ class ControllerTest extends WebTestCase
     }
 }
 JSON
-);
+        );
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
     }
 
