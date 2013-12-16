@@ -13,12 +13,35 @@ $app->get('/', function () {
     return 'Hello world!';
 });
 
-$request = Request::create('/models','POST',array(), array(), array(), array(),
-    '{"model":{"properties":{"prop":{"name":"firstName", "type":"string"},
-    "prop2":{"name":"lastName","type":"string","description":"Nom de la personne"},
-    "prop3":{"name":"age","type":"integer"}},"metadata":{"name":"People","description":"Des personnes"}}}');
+$request = Request::create('/models', 'POST', array(), array(), array(), array(), <<<JSON
+{
+    "model": {
+        "properties": [
+            {
+                "name": "firstName",
+                "type": "string"
+            },
+            {
+                "name": "lastName",
+                "type": "string",
+                "description": "Nom de la personne"
+            },
+            {
+                "name": "age",
+                "type": "integer"
+            }
+        ],
+        "metadata": {
+            "name": "People",
+            "description": "Des personnes"
+        }
+    }
+}
+JSON
+);
+
 $request->headers->set('Accept', array('application/json'));
-$request->headers->set('content_type', array('application/json'));
+$request->headers->set('Content-Type', 'application/json');
 
 $before = function () use ($request) {
     if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
