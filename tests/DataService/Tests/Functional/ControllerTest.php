@@ -21,4 +21,37 @@ class ControllerTest extends WebTestCase
 
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
+
+    public function testPostShouldReturn201IfGoodRequest()
+    {
+        $client  = $this->createClient();
+        $client->request('POST', '/models', array(), array(), array(), <<<JSON
+{
+    "model": {
+        "properties": [
+            {
+                "name": "firstName",
+                "type": "string"
+            },
+            {
+                "name": "lastName",
+                "type": "string",
+                "description": "Nom de la personne"
+            },
+            {
+                "name": "age",
+                "type": "integer"
+            }
+        ],
+        "metadata": {
+            "name": "People",
+            "description": "Des personnes"
+        }
+    }
+}
+JSON
+);
+        $this->assertEquals(201, $client->getResponse()->getStatusCode());
+    }
+
 }
