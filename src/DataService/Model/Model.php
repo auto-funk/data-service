@@ -10,7 +10,7 @@ class Model
 
     private $filters;
 
-    public function __construct(array $metadata = array(), array $properties = array(), array $filters = array())
+    public function __construct(Metadata $metadata, array $properties = array(), array $filters = array())
     {
         $this->metadata    = $metadata;
         $this->properties  = $properties;
@@ -22,7 +22,7 @@ class Model
         return $this->metadata;
     }
 
-    public function setMetadata($metadata)
+    public function setMetadata(Metadata $metadata)
     {
         $this->metadata = $metadata;
     }
