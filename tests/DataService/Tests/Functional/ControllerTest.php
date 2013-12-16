@@ -19,6 +19,11 @@ class ControllerTest extends WebTestCase
         $client  = $this->createClient();
         $client->request('POST', '/models');
 
+        $this->assertFalse($client->getRequest()->headers->contains(
+                'Content-type',
+                'application/json'
+            )
+        );
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
@@ -53,7 +58,167 @@ class ControllerTest extends WebTestCase
 }
 JSON
         );
+
+        $this->assertTrue($client->getRequest()->headers->contains(
+                'Content-type',
+                'application/json'
+            )
+        );
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
     }
 
+    public function testPostWithProblemInMetadataName()
+    {
+        $client  = $this->createClient();
+        $client->request('POST', '/models', array(), array(), array(
+                'CONTENT_TYPE'  => 'application/json'
+            ), <<<JSON
+{
+    "model": {
+        "properties": [
+            {
+                "name": "firstName",
+                "type": "string"
+            },
+            {
+                "name": "lastName",
+                "type": "string",
+                "description": "Nom de la personne"
+            },
+            {
+                "name": "age",
+                "type": "integer"
+            }
+        ],
+        "metadata": {
+            "name": "Peop le",
+            "description": "Des personnes"
+        }
+    }
+}
+JSON
+        );
+        $this->assertTrue($client->getRequest()->headers->contains(
+                'Content-type',
+                'application/json'
+            )
+        );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPostWithProblemInOnePropertyName()
+    {
+        $client  = $this->createClient();
+        $client->request('POST', '/models', array(), array(), array(
+                'CONTENT_TYPE'  => 'application/json'
+            ), <<<JSON
+{
+    "model": {
+        "properties": [
+            {
+                "name": "",
+                "type": "string"
+            },
+            {
+                "name": "lastName",
+                "type": "string",
+                "description": "Nom de la personne"
+            },
+            {
+                "name": "age",
+                "type": "integer"
+            }
+        ],
+        "metadata": {
+            "name": 'People',
+            "description": "Des personnes"
+        }
+    }
+}
+JSON
+        );
+        $this->assertTrue($client->getRequest()->headers->contains(
+                'Content-type',
+                'application/json'
+            )
+        );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPostWithProblemOnePropertyNameMissing()
+    {
+        $client  = $this->createClient();
+        $client->request('POST', '/models', array(), array(), array(
+                'CONTENT_TYPE'  => 'application/json'
+            ), <<<JSON
+{
+    "model": {
+        "properties": [
+            {
+                "type": "string"
+            },
+            {
+                "name": "lastName",
+                "type": "string",
+                "description": "Nom de la personne"
+            },
+            {
+                "name": "age",
+                "type": "integer"
+            }
+        ],
+        "metadata": {
+            "name": 'People',
+            "description": "Des personnes"
+        }
+    }
+}
+JSON
+        );
+        $this->assertTrue($client->getRequest()->headers->contains(
+                'Content-type',
+                'application/json'
+            )
+        );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPostWithProblemInPropertiesArray()
+    {
+        $client  = $this->createClient();
+        $client->request('POST', '/models', array(), array(), array(
+                'CONTENT_TYPE'  => 'application/json'
+            ), <<<JSON
+{
+    "model": {
+        "properties":
+            {
+                "name": "firstName",
+                "type": "string"
+            },
+            {
+                "name": "lastName",
+                "type": "string",
+                "description": "Nom de la personne"
+            },
+            {
+                "name": "age",
+                "type": "integer"
+            }
+        ],
+        "metadata": {
+            "name": 'People',
+            "description": "Des personnes"
+        }
+    }
+}
+JSON
+        );
+        $this->assertTrue($client->getRequest()->headers->contains(
+                'Content-type',
+                'application/json'
+            )
+        );
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+    }
 }
