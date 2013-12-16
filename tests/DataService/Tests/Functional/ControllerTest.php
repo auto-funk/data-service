@@ -57,7 +57,7 @@ JSON
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
     }
 
-    public function testPostWithProblemInMetadataName()
+    public function testPostWithInvalidMetadataName()
     {
         $client  = $this->createClient();
         $client->request('POST', '/models', array(), array(), array(
@@ -92,7 +92,7 @@ JSON
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
-    public function testPostWithProblemInOnePropertyName()
+    public function testPostWithBadProperty()
     {
         $client  = $this->createClient();
         $client->request('POST', '/models', array(), array(), array(
@@ -127,7 +127,7 @@ JSON
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
-    public function testPostWithProblemOnePropertyNameMissing()
+    public function testPostWithBadProperty2()
     {
         $client  = $this->createClient();
         $client->request('POST', '/models', array(), array(), array(
@@ -161,38 +161,4 @@ JSON
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
-    public function testPostWithProblemInPropertiesArray()
-    {
-        $client  = $this->createClient();
-        $client->request('POST', '/models', array(), array(), array(
-                'CONTENT_TYPE'  => 'application/json'
-            ), <<<JSON
-{
-    "model": {
-        "properties":
-            {
-                "name": "firstName",
-                "type": "string"
-            },
-            {
-                "name": "lastName",
-                "type": "string",
-                "description": "Nom de la personne"
-            },
-            {
-                "name": "age",
-                "type": "integer"
-            }
-        ],
-        "metadata": {
-            "name": 'People',
-            "description": "Des personnes"
-        }
-    }
-}
-JSON
-        );
-
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
-    }
 }
