@@ -19,11 +19,6 @@ class ControllerTest extends WebTestCase
         $client  = $this->createClient();
         $client->request('POST', '/models');
 
-        $this->assertFalse($client->getRequest()->headers->contains(
-                'Content-type',
-                'application/json'
-            )
-        );
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
@@ -59,11 +54,6 @@ class ControllerTest extends WebTestCase
 JSON
         );
 
-        $this->assertTrue($client->getRequest()->headers->contains(
-                'Content-type',
-                'application/json'
-            )
-        );
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
     }
 
@@ -98,11 +88,7 @@ JSON
 }
 JSON
         );
-        $this->assertTrue($client->getRequest()->headers->contains(
-                'Content-type',
-                'application/json'
-            )
-        );
+
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
@@ -137,11 +123,7 @@ JSON
 }
 JSON
         );
-        $this->assertTrue($client->getRequest()->headers->contains(
-                'Content-type',
-                'application/json'
-            )
-        );
+
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
@@ -175,11 +157,7 @@ JSON
 }
 JSON
         );
-        $this->assertTrue($client->getRequest()->headers->contains(
-                'Content-type',
-                'application/json'
-            )
-        );
+
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
@@ -214,11 +192,7 @@ JSON
 }
 JSON
         );
-        $this->assertTrue($client->getRequest()->headers->contains(
-                'Content-type',
-                'application/json'
-            )
-        );
+
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 }
