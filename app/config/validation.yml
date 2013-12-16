@@ -1,5 +1,12 @@
 DataService\Model\Model:
     properties:
+        metadata:
+            - Valid: ~
+        properties:
+            - Valid: ~
+
+DataService\Model\Metadata:
+    properties:
         name:
             - NotBlank: ~
             - Type:
@@ -10,13 +17,6 @@ DataService\Model\Model:
         description:
             - Type:
                 type: string
-        properties:
-            - NotBlank: ~
-            - Type:
-                 type: array
-        filters:
-             - Type:
-                 type: array
 
 DataService\Model\Property:
     properties:

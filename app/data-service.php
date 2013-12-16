@@ -4,17 +4,10 @@ $app = require_once __DIR__ . '/config/config.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Silex\Provider\FormServiceProvider;
+
 use DataService\Model\ModelType;
 use DataService\Model\Model;
 
-$app->register(new Silex\Provider\ValidatorServiceProvider());
-
-$app->register(new FormServiceProvider());
-
-$app['validator.mapping.class_metadata_factory'] = new Symfony\Component\Validator\Mapping\ClassMetadataFactory(
-    new Symfony\Component\Validator\Mapping\Loader\YamlFileLoader(__DIR__.'/../src/DataService/Model/validation.yml')
-);
 
 $app->get('/', function () {
     return 'Hello world!';
