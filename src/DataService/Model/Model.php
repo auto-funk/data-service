@@ -22,6 +22,11 @@ class Model
         return $this->metadata;
     }
 
+    public function getName()
+    {
+        return $this->metadata->getName();
+    }
+
     public function getFilters()
     {
         return $this->filters;

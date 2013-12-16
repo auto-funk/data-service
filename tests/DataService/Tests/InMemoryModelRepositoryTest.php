@@ -3,6 +3,7 @@
 namespace DataService\Tests;
 
 use DataService\Model\InMemoryModelRepository;
+use DataService\Model\Metadata;
 use DataService\Model\Model;
 use DataService\Model\Property;
 
@@ -12,15 +13,17 @@ class InMemoryModelRepositoryTest extends TestCase
 
     public function testFind()
     {
-        $model = new Model('Toto', 'Description 1', ['properties1'], ['filter1']);
-        $repo = new InMemoryModelRepository([$model]);
+        $model = new Model(new Metadata('Toto', 'Description 1'), ['properties1'], ['filter1']);
+        $repo  = new InMemoryModelRepository([$model]);
+
         $this->assertSame($model, $repo->find("Toto"));
     }
 
     public function testFindReturnsNullIfNameNotFound()
     {
-        $model = new Model('Toto', 'Description 1', ['properties1'], ['filter1']);
+        $model = new Model(new Metadata('Toto', 'Description 1'), ['properties1'], ['filter1']);
         $repo = new InMemoryModelRepository([$model]);
+
         $this->assertSame(null, $repo->find("Titi"));
     }
 
@@ -46,7 +49,7 @@ class InMemoryModelRepositoryTest extends TestCase
     {
         $p5 = new Property('name5', 'string', 'description name5', 'pattern5');
         $ar5 = array($p5);
-        $m5 = new Model('Tutur', 'test de la description tutur', $ar5,['filter tur']);
+        $m5 = new Model(new Metadata('Tutur', 'test de la description tutur'), $ar5,['filter tur']);
 
         $nbModels = count($this->getModels());
         $this->assertCount($nbModels, $this->modelRepo->findAll());
@@ -62,7 +65,7 @@ class InMemoryModelRepositoryTest extends TestCase
     {
         $p3 = new Property('name3','string', 'description name3', 'pattern3');
         $ar3 = array($p3);
-        $m3 = new Model('Titi', 'test de la description titi', $ar3,['filter tii']);
+        $m3 = new Model(new Metadata('Titi', 'test de la description titi'), $ar3,['filter tii']);
 
         $nbModels = count($this->getModels());
         $this->assertCount($nbModels, $this->modelRepo->findAll());
@@ -87,20 +90,20 @@ class InMemoryModelRepositoryTest extends TestCase
         $listProperty1 = [
             new Property('name1', 'string', 'description name1', 'pattern1')
         ];
-        $model1 = new Model('Tata', 'test de la description tata', $listProperty1,['filter taa']);
+        $model1 = new Model(new Metadata('Tata', 'test de la description tata'), $listProperty1,['filter taa']);
 
         $property2 = new Property('name2', 'string', 'description name2', 'pattern2');
         $property22 = new Property('name22', 'string', 'description name22', 'pattern22');
         $listProperty2 = array($property2, $property22);
-        $model2 = new Model('Tutu', 'Description tutu', $listProperty2, ['filter tu']);
+        $model2 = new Model(new Metadata('Tutu', 'Description tutu'), $listProperty2, ['filter tu']);
 
         $property3 = new Property('name3','string', 'description name3', 'pattern3');
         $listProperty3 = array($property3);
-        $model3 = new Model('Titi', 'test de la description titi', $listProperty3,['filter tii']);
+        $model3 = new Model(new Metadata('Titi', 'test de la description titi'), $listProperty3,['filter tii']);
 
         $property44 = new Property('name22', 'string', 'description name22', 'pattern22');
         $listProperty4 = array($property44);
-        $model4 = new Model('Totor', 'test de la description totor', $listProperty4,['filter tor']);
+        $model4 = new Model(new Metadata('Totor', 'test de la description totor'), $listProperty4,['filter tor']);
 
         $model = array($model1, $model2, $model3, $model4);
 
