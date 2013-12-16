@@ -13,11 +13,13 @@ class PropertyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
-                ->add('type')
-                ->add('description')
-                ->add('pattern')
-                ->add('format');
+        $builder
+            ->add('name')
+            ->add('type')
+            ->add('description')
+            ->add('pattern')
+            ->add('format')
+        ;
     }
 
     /**
@@ -26,7 +28,7 @@ class PropertyType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'DataService\Model\Property',
+            'data_class'      => 'DataService\Model\Property',
             'csrf_protection' => false,
         ));
     }

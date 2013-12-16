@@ -13,8 +13,10 @@ class MetadataType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
-                ->add('description');
+        $builder
+            ->add('name')
+            ->add('description')
+        ;
     }
 
     /**
@@ -23,7 +25,7 @@ class MetadataType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'DataService\Model\Metadata',
+            'data_class'      => 'DataService\Model\Metadata',
             'csrf_protection' => false,
         ));
     }

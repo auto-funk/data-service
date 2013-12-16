@@ -13,15 +13,13 @@ class ModelType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('metadata', new MetadataType())
-                ->add('properties', 'collection', array(
-                        'type'  => 'text',
-                        'options'   => array(
-                            'label'  =>  new PropertyType()
-                        ),
-                        'allow_add' => true
-                     ));
-//                ->add('filters', 'collection', );
+        $builder
+            ->add('metadata', new MetadataType())
+            ->add('properties', 'collection', array(
+                'type'      => new PropertyType(),
+                'allow_add' => true,
+            )
+        );
     }
 
     /**
@@ -30,7 +28,7 @@ class ModelType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'DataService\Model\Model',
+            'data_class'      => 'DataService\Model\Model',
             'csrf_protection' => false,
         ));
     }
