@@ -47,7 +47,6 @@ $before = function () use ($request) {
     if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
         $data = json_decode($request->getContent(), true);
         $request->request->replace(is_array($data) ? $data : array());
-
     }
 };
 
@@ -57,13 +56,15 @@ $app->post('/models', function () use ($request, $app) {
     $form->handleRequest($request);
     if ($form->isValid()) {
         $data = $form->getData();
+
         //Save in database
-        return new Response('Model '.$data->getMetadata()->getName().' validated', 200);
+
+        return new Response(var_dump($data), 201);
     }
 
-    return new Response('Json data badly written:', 400);
+    return new Response($form->getErrorsAsString(), 400);
 })
-    ->before($before)
-    ->method('POST|GET');
+->before($before)
+->method('POST|GET');
 
 return $app;
