@@ -1,6 +1,6 @@
 <?php
 
-$app = require_once __DIR__ . '/config/config.php';
+$app = require __DIR__ . '/config/config.php';
 
 use DataService\Form\Type\ModelType;
 use Symfony\Component\HttpFoundation\Request;
