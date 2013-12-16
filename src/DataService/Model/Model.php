@@ -36,16 +36,4 @@ class Model
     {
         return isset($this->properties[$key]) ? $this->properties[$key] : $default;
     }
-
-    public function addProperty(Property $property)
-    {
-        array_push($this->properties, $property);
-    }
-
-    public function removeProperty($key)
-    {
-        if (null !== $property = $this->getProperty($key)) {
-            unset($this->properties[$key]);
-        }
-    }
 }

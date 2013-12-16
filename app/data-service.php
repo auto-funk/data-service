@@ -49,8 +49,8 @@ $before = function () use ($request) {
 
 $app->post('/models', function () use ($request, $app) {
     $form = $app['form.factory']->create(new ModelType());
-
     $form->handleRequest($request);
+
     if ($form->isValid()) {
         $data = $form->getData();
 
