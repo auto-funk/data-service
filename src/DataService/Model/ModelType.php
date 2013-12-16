@@ -6,13 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ModelType extends AbstractType {
-
+class ModelType extends AbstractType
+{
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
-
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder->add('metadata', new MetadataType())
                 ->add('properties', 'collection', array(
                         'type'  => 'text',
@@ -38,7 +38,8 @@ class ModelType extends AbstractType {
     /**
      * {@inheritdoc}
      */
-    public function getName() {
+    public function getName()
+    {
         return 'model';
     }
 }

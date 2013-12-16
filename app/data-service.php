@@ -5,7 +5,6 @@ $app = require_once __DIR__ . '/config/config.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Silex\Provider\FormServiceProvider;
-use DataService\Model\ValidatorArrayModel;
 use DataService\Model\ModelType;
 use DataService\Model\Model;
 
@@ -45,6 +44,7 @@ $app->post('/models', function () use ($request, $app) {
         //Save in database
         return new Response('Model '.$data->getMetadata()->getName().' validated', 200);
     }
+
     return new Response('Json data badly written:', 400);
 })
     ->before($before)

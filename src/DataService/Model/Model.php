@@ -6,9 +6,9 @@ class Model
 {
     private $metadata;
 
-	private $properties;
+    private $properties;
 
-	private $filters;
+    private $filters;
 
     public function __construct(array $metadata = array(), array $properties = array(), array $filters = array())
     {
@@ -22,30 +22,33 @@ class Model
         return $this->metadata;
     }
 
-    public function setMetadata($metadata) {
+    public function setMetadata($metadata)
+    {
         $this->metadata = $metadata;
     }
 
-	public function getFilters()
-	{
-		return $this->filters;
-	}
+    public function getFilters()
+    {
+        return $this->filters;
+    }
 
-	public function getProperties()
-	{
-		return $this->properties;
-	}
+    public function getProperties()
+    {
+        return $this->properties;
+    }
 
-	public function getProperty($key, $default = null)
-	{
-		return isset($this->properties[$key]) ? $this->properties[$key] : $default;
-	}
+    public function getProperty($key, $default = null)
+    {
+        return isset($this->properties[$key]) ? $this->properties[$key] : $default;
+    }
 
-    public function addProperty($property) {
+    public function addProperty($property)
+    {
         array_push($this->properties, $property);
     }
 
-    public function removeProperty($key) {
+    public function removeProperty($key)
+    {
         if ($property = $this->getProperty($key) != null) {
             unset($property);
         }

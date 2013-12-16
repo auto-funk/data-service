@@ -2,13 +2,14 @@
 
 namespace DataService\Model;
 
-class Metadata {
-
+class Metadata
+{
     private $name;
 
     private $description;
 
-    public function __construct($name, $description = null) {
+    public function __construct($name, $description = null)
+    {
         $this->name        = $name;
         $this->description = $description;
     }
@@ -18,11 +19,13 @@ class Metadata {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
     }
 
