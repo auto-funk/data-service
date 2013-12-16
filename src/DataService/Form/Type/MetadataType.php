@@ -1,13 +1,14 @@
 <?php
 
-namespace DataService\Model;
+namespace DataService\Form\Type;
 
+use DataService\Model\Metadata;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PropertyType extends AbstractType
+class MetadataType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -16,10 +17,7 @@ class PropertyType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('type')
             ->add('description')
-            ->add('pattern')
-            ->add('format')
         ;
     }
 
@@ -29,15 +27,12 @@ class PropertyType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'      => 'DataService\Model\Property',
+            'data_class'      => 'DataService\Model\Metadata',
             'csrf_protection' => false,
             'empty_data'      => function (FormInterface $form) {
-                return new Property(
+                return new Metadata(
                     $form->get('name')->getData(),
-                    $form->get('type')->getData(),
-                    $form->get('description')->getData(),
-                    $form->get('pattern')->getData(),
-                    $form->get('format')->getData()
+                    $form->get('description')->getData()
                 );
             }
         ));
@@ -48,6 +43,6 @@ class PropertyType extends AbstractType
      */
     public function getName()
     {
-        return 'property';
+        return 'metadata';
     }
 }

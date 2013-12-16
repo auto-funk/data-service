@@ -1,13 +1,14 @@
 <?php
 
-namespace DataService\Model;
+namespace DataService\Form\Type;
 
+use DataService\Model\Property;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ModelType extends AbstractType
+class PropertyType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -15,12 +16,12 @@ class ModelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('metadata', new MetadataType())
-            ->add('properties', 'collection', array(
-                'type'      => new PropertyType(),
-                'allow_add' => true,
-            )
-        );
+            ->add('name')
+            ->add('type')
+            ->add('description')
+            ->add('pattern')
+            ->add('format')
+        ;
     }
 
     /**
@@ -29,12 +30,15 @@ class ModelType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'      => 'DataService\Model\Model',
+            'data_class'      => 'DataService\Model\Property',
             'csrf_protection' => false,
             'empty_data'      => function (FormInterface $form) {
-                return new Model(
-                    $form->get('metadata')->getData(),
-                    $form->get('properties')->getData()
+                return new Property(
+                    $form->get('name')->getData(),
+                    $form->get('type')->getData(),
+                    $form->get('description')->getData(),
+                    $form->get('pattern')->getData(),
+                    $form->get('format')->getData()
                 );
             }
         ));
@@ -45,6 +49,6 @@ class ModelType extends AbstractType
      */
     public function getName()
     {
-        return 'model';
+        return 'property';
     }
 }

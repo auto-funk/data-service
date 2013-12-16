@@ -2,12 +2,9 @@
 
 $app = require_once __DIR__ . '/config/config.php';
 
+use DataService\Form\Type\ModelType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use DataService\Model\ModelType;
-use DataService\Model\Model;
-
 
 $app->get('/', function () {
     return 'Hello world!';
@@ -58,7 +55,6 @@ $app->post('/models', function () use ($request, $app) {
         $data = $form->getData();
 
         //Save in database
-
         return new Response(var_dump($data), 201);
     }
 
