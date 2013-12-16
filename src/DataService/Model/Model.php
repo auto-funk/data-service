@@ -22,11 +22,6 @@ class Model
         return $this->metadata;
     }
 
-    public function setMetadata(Metadata $metadata)
-    {
-        $this->metadata = $metadata;
-    }
-
     public function getFilters()
     {
         return $this->filters;
