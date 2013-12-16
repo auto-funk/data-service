@@ -4,6 +4,7 @@ namespace DataService\Model;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ModelType extends AbstractType
@@ -30,6 +31,12 @@ class ModelType extends AbstractType
         $resolver->setDefaults(array(
             'data_class'      => 'DataService\Model\Model',
             'csrf_protection' => false,
+            'empty_data'      => function (FormInterface $form) {
+                return new Model(
+                    $form->get('metadata')->getData(),
+                    $form->get('properties')->getData()
+                );
+            }
         ));
     }
 
