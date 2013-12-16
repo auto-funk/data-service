@@ -11,4 +11,8 @@ $app['validator.mapping.class_metadata_factory'] = new Symfony\Component\Validat
     new Symfony\Component\Validator\Mapping\Loader\YamlFileLoader(__DIR__ . '/validation.yml')
 );
 
+$app['data_service.repository'] = $app->share(function () {
+    return new DataService\Model\InMemoryModelRepository(require __DIR__ . '/fixtures.php');
+});
+
 return $app;
