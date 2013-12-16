@@ -42,15 +42,15 @@ class Model
         return isset($this->properties[$key]) ? $this->properties[$key] : $default;
     }
 
-    public function addProperty($property)
+    public function addProperty(Property $property)
     {
         array_push($this->properties, $property);
     }
 
     public function removeProperty($key)
     {
-        if ($property = $this->getProperty($key) != null) {
-            unset($property);
+        if (null !== $property = $this->getProperty($key)) {
+            unset($this->properties[$key]);
         }
     }
 }
