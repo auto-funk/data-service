@@ -15,4 +15,8 @@ $app['data_service.repository'] = $app->share(function () {
     return new DataService\Model\InMemoryModelRepository(require __DIR__ . '/fixtures.php');
 });
 
+$app['data_service.data_generator'] = $app->share(function () {
+    return new DataService\DataGenerator\FakerDataGenerator();
+});
+
 return $app;
