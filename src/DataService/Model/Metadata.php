@@ -23,4 +23,9 @@ class Metadata
     {
         return $this->description;
     }
+
+    public function isEqualTo(Metadata $meta)
+    {
+        return $this->getName() === $meta->getName();
+    }
 }
