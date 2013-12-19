@@ -47,15 +47,4 @@ class Property
     {
         return $this->pattern;
     }
-
-    public function getArrayAttributes()
-    {
-        $attributes['name'] = $this->getName();
-        $attributes['type'] = $this->getType();
-        $attributes['description'] = $this->getDescription();
-        $attributes['pattern'] = $this->getPattern();
-        $attributes['format'] = $this->getFormat();
-
-        return $attributes;
-    }
 }

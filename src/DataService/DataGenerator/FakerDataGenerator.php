@@ -19,13 +19,11 @@ class FakerDataGenerator implements DataGeneratorInterface
     public function generateCollection(Model $model)
     {
         $properties = $model->getProperties();
-        $propertiesValue = array();
         $arrayData = array();
         for ($i = 0 ; $i < count($properties) ; $i ++) {
-            $propertiesValue[$i] = $properties[$i]->getArrayAttributes();
-            $valueProperty = $this->generateData($propertiesValue[$i]['name'], $propertiesValue[$i]['type'],
-                                                 $propertiesValue[$i]['pattern'], $propertiesValue[$i]['format']);
-            $arrayData[$propertiesValue[$i]['name']] = $valueProperty;
+            $valueProperty = $this->generateData($properties[$i]->getName(), $properties[$i]->getType(),
+                                                 $properties[$i]->getPattern(), $properties[$i]->getFormat());
+            $arrayData[$properties[$i]->getName()] = $valueProperty;
         }
 
         return $arrayData;
