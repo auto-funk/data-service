@@ -23,11 +23,24 @@ class YamlModelRepository implements ModelRepositoryInterface
      */
     public function find($name){
         foreach ($this->findAll() as $model) {
-            if ($model->isEqualTo($name)) {
+            if ($name === $this->returnName($model)) {
                 return $model;
             }
         }
         return null;
+    }
+
+    public function returnName(array $model)
+    {
+        foreach ($model as $key => $value) {
+            if($key === "metadata"){
+                foreach ($value as $cle => $valeur) {
+                    if($cle === "name"){
+                        return $valeur;
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -37,18 +50,22 @@ class YamlModelRepository implements ModelRepositoryInterface
     {
         $models = array();
         foreach ($this->getRows() as $row) {
-            $models[] = new Model(
+           /* $models[] = new Model(
                 new Metadata($row['name'], $row['description']),
                 $row['properties'],
-                $row['filters']
-            );
+                $row['filters']*/
+                $models[] = array(
+                    "properties" => $row['properties'],
+                    "metadata" => array(
+                        "name" => $row['name'], "description" => $row['description']),
+                    "filters" => $row['filters']);
         }
 
         return $models;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}/
      */
     public function add(Model $model)
     {
@@ -57,16 +74,14 @@ class YamlModelRepository implements ModelRepositoryInterface
             if ($model->getMetadata()->isEqualTo(new Metadata($row['name'], $row['description']))) {
                 continue;
             }
-            //var_dump(new Metadata($row['metadata']));
             $rows[] = $row;
         }
-        $testProp = $this->completeProperty($model->getProperties());
-        echo "<br/> ********************************************************** <br/>";
 
+        $prop = $this->completeProperty($model->getProperties());
         $rows[] = array(
             'name'          => $model->getName(),
             'description'   => $model->getDescription(),
-            'properties'    => $testProp,
+            'properties'    => $prop,
             'filters'       => $model->getFilters(),
         );
 
@@ -101,7 +116,11 @@ class YamlModelRepository implements ModelRepositoryInterface
         return $newProperties;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     public function findBy(Property $property)
-    {return null;}
+    {
+        return null;
+    }
 }
