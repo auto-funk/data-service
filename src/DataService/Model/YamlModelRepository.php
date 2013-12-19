@@ -7,6 +7,7 @@ use DataService\Model\Metadata;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
+
 class YamlModelRepository implements ModelRepositoryInterface
 {
     private $filename;
@@ -30,6 +31,12 @@ class YamlModelRepository implements ModelRepositoryInterface
         return null;
     }
 
+    /**
+     * Return model name
+     *
+     * @param Model[]
+     * @return Model name
+     */
     public function returnName(array $model)
     {
         foreach ($model as $key => $value) {
@@ -108,6 +115,12 @@ class YamlModelRepository implements ModelRepositoryInterface
         return Yaml::parse($this->filename) ?: array();
     }
 
+    /**
+     * Allows to have a useful property array
+     *
+     * @param Old properties[]
+     * @return New properties[]
+     */
     private function completeProperty(array $properties)
     {
         for($i = 0 ; $i < count($properties) ; $i++) {
