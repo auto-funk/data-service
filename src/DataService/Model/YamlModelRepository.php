@@ -7,7 +7,6 @@ use DataService\Model\Metadata;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
-
 class YamlModelRepository implements ModelRepositoryInterface
 {
     private $filename;
@@ -22,12 +21,14 @@ class YamlModelRepository implements ModelRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function find($name){
+    public function find($name)
+    {
         foreach ($this->findAll() as $model) {
             if ($name === $this->returnName($model)) {
-                return $model;
+                return array($model);
             }
         }
+
         return null;
     }
 
@@ -40,9 +41,9 @@ class YamlModelRepository implements ModelRepositoryInterface
     public function returnName(array $model)
     {
         foreach ($model as $key => $value) {
-            if($key === "metadata"){
+            if ($key === "metadata") {
                 foreach ($value as $cle => $valeur) {
-                    if($cle === "name"){
+                    if ($cle === "name") {
                         return $valeur;
                     }
                 }
@@ -57,10 +58,6 @@ class YamlModelRepository implements ModelRepositoryInterface
     {
         $models = array();
         foreach ($this->getRows() as $row) {
-           /* $models[] = new Model(
-                new Metadata($row['name'], $row['description']),
-                $row['properties'],
-                $row['filters']*/
                 $models[] = array(
                     "properties" => $row['properties'],
                     "metadata" => array(
@@ -123,9 +120,10 @@ class YamlModelRepository implements ModelRepositoryInterface
      */
     private function completeProperty(array $properties)
     {
-        for($i = 0 ; $i < count($properties) ; $i++) {
+        for ($i = 0 ; $i < count($properties) ; $i++) {
             $newProperties[] = $properties[$i]->getArrayAttributes();
         }
+
         return $newProperties;
     }
 
