@@ -6,17 +6,24 @@ use DataService\Model\Model;
 
 class FakerDataGenerator implements DataGeneratorInterface
 {
+    private $faker;
+
+    public function __construct($faker)
+    {
+        $this->faker = $faker;
+    }
+
     /**
      * {@inheritDoc}
      */
-    public function generateCollection(Model $model, $app)
+    public function generateCollection(Model $model)
     {
         $properties = $model->getProperties();
         $propertiesValue = array();
         $arrayData = array();
         for ($i = 0 ; $i < count($properties) ; $i ++) {
             $propertiesValue[$i] = $properties[$i]->getArrayAttributes();
-            $valueProperty = $this->generateData($app, $propertiesValue[$i]['name'], $propertiesValue[$i]['type'],
+            $valueProperty = $this->generateData($propertiesValue[$i]['name'], $propertiesValue[$i]['type'],
                                                  $propertiesValue[$i]['pattern'], $propertiesValue[$i]['format']);
             $arrayData[$propertiesValue[$i]['name']] = $valueProperty;
         }
@@ -24,42 +31,42 @@ class FakerDataGenerator implements DataGeneratorInterface
         return $arrayData;
     }
 
-    private function generateData($app, $name, $type, $pattern, $format)
+    private function generateData($name, $type, $pattern, $format)
     {
         if ($type === 'string' && is_null($pattern) && is_null($format)) {
-            return $this->generateSimpleDataString($app, $name);
+            return $this->generateSimpleDataString($name);
         }
         if ($type === 'number' && is_null($pattern) && is_null($format)) {
-            return $app['faker']->randomNumber($nbDigits = NULL);
+            return $this->faker->randomNumber($nbDigits = NULL);
         }
 
     }
 
-    private function generateSimpleDataString($app, $name)
+    private function generateSimpleDataString($name)
     {
         switch ($name) {
             case 'name':
-                return $app['faker']->name;
+                return $this->faker->name;
             case 'firstName':
-                return $app['faker']->firstName;
+                return $this->faker->firstName;
             case 'lastName':
-                return $app['faker']->lastName;
+                return $this->faker->lastName;
             case 'email':
-                return $app['faker']->safeEmail;
+                return $this->faker->safeEmail;
             case 'address':
-                return $app['faker']->address;
+                return $this->faker->address;
             case 'city':
-                return $app['faker']->city;
+                return $this->faker->city;
             case 'streetAddress':
-                return $app['faker']->streetAddress;
+                return $this->faker->streetAddress;
             case 'postcode':
-                return $app['faker']->postcode;
+                return $this->faker->postcode;
             case 'country':
-                return $app['faker']->country;
+                return $this->faker->country;
             case 'phoneNumber':
-                return $app['faker']->phoneNumber;
+                return $this->faker->phoneNumber;
             default:
-                return $app['faker']->sentence($nbWords = 4);
+                return $this->faker->sentence($nbWords = 4);
         }
     }
 

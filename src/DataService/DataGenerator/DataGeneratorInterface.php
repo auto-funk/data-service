@@ -13,5 +13,5 @@ interface DataGeneratorInterface
      *
      * @return array filled
      */
-    public function generateCollection (Model $model, $app);
+    public function generateCollection(Model $model);
 }
