@@ -17,7 +17,7 @@ $app['data_service.repository'] = $app->share(function () {
 });
 
 $app['data_service.data_generator'] = $app->share(function () use ($app) {
-    return new DataService\DataGenerator\FakerDataGenerator(new DataService\DataGenerator\Faker($app['faker']));
+    return new DataService\DataGenerator\FakerDataGenerator($app['faker']);
 });
 
 return $app;

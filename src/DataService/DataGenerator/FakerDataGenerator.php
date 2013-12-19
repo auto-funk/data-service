@@ -4,14 +4,15 @@ namespace DataService\DataGenerator;
 
 use DataService\Model\Model;
 use DataService\Model\Property;
+use Faker\Generator;
 
 class FakerDataGenerator implements DataGeneratorInterface
 {
     private $faker;
 
-    public function __construct(Faker $faker)
+    public function __construct(Generator $faker)
     {
-        $this->faker = $faker->var;
+        $this->faker = $faker;
     }
 
     /**
