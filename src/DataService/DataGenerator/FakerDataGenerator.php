@@ -60,37 +60,19 @@ class FakerDataGenerator implements DataGeneratorInterface
 
     private function generateSimpleDataWithPattern(Property $property, array $arrayData)
     {
-        if ($property->getName() === 'email' || $property->getType() === 'email') {
-            $splitEmailPattern = explode("@", $property->getPattern());
-            $splitPrefixEmailPattern = explode(".", $splitEmailPattern[0]);
-            $prefixMail = '';
-            if (count($splitPrefixEmailPattern) < 2) {
-                $prefixMail = $this->verifyPatternVariable($splitPrefixEmailPattern[0], $arrayData);
-            } else {
-                $finalMail = (count($splitPrefixEmailPattern) > 2 ? 'error' : null);
-                if ($finalMail === 'error') {
-                    return 'error';
-                }
-                $count = 0;
-                foreach ($splitPrefixEmailPattern as $value) {
-                    $prefixMail .= ($count === 1) ? '.' : '';
-                    $prefixMail .= $this->verifyPatternVariable($value, $arrayData);
-                    $count ++;
-                }
-            }
-
-            return $prefixMail.'@'.$splitEmailPattern[1];
+        $pattern = $property->getPattern();
+        $patternExplodeBegin = explode('{', $pattern);
+        $finalValue = $patternExplodeBegin[0];
+        foreach ($patternExplodeBegin as $value) {
+            $patternExplodeEnd = explode('}', $value);
+            $finalValue .= $this->verifyPatternVariable($patternExplodeEnd[0], $arrayData).$patternExplodeEnd[1];
         }
 
-        return $this->faker->email;
+        return $finalValue;
     }
 
     private function verifyPatternVariable($variable, array $arrayData)
     {
-        if (substr($variable, 0, 1) != '{' || substr($variable, -1) != '}') {
-            return 'error';
-        }
-        $variable = substr($variable, 1, -1);
         if (array_key_exists($variable, $arrayData)) {
             return strtolower($arrayData[$variable]);
         }
