@@ -3,14 +3,15 @@
 namespace DataService\DataGenerator;
 
 use DataService\Model\Model;
+use DataService\Model\Property;
 
 class FakerDataGenerator implements DataGeneratorInterface
 {
     private $faker;
 
-    public function __construct($faker)
+    public function __construct(Faker $faker)
     {
-        $this->faker = $faker;
+        $this->faker = $faker->var;
     }
 
     /**
@@ -21,66 +22,46 @@ class FakerDataGenerator implements DataGeneratorInterface
         $properties = $model->getProperties();
         $arrayData = array();
         for ($i = 0 ; $i < count($properties) ; $i ++) {
-            $valueProperty = $this->generateData($properties[$i]->getName(), $properties[$i]->getType(),
-                                                 $properties[$i]->getPattern(), $properties[$i]->getFormat(), $arrayData);
+            $valueProperty = $this->generateData($properties[$i], $arrayData);
+
             $arrayData[$properties[$i]->getName()] = $valueProperty;
         }
 
         return $arrayData;
     }
 
-    private function generateData($name, $type, $pattern, $format, array $arrayData)
+    private function generateData(Property $property, array $arrayData)
     {
-        if ($type === 'string' && is_null($pattern) && is_null($format)) {
-            return $this->generateSimpleDataString($name);
+        if ($property->getType() === 'string' && is_null($property->getPattern()) && is_null($property->getFormat())) {
+            return $this->generateSimpleDataString($property->getName());
         }
-        if ($type === 'number' && is_null($pattern) && is_null($format)) {
+        if ($property->getType() === 'number' && is_null($property->getPattern()) && is_null($property->getFormat())) {
             return $this->faker->randomNumber($nbDigits = NULL);
         }
-        if ($type === 'email' && is_null($pattern) && is_null($format)) {
-            return $this->faker->safeEmail;
+        if ($property->getType() === 'email' && is_null($property->getPattern()) && is_null($property->getFormat())) {
+            return $this->faker->email;
         }
-        if (!is_null($pattern) && is_null($format)) {
-            return $this->generateSimpleDataWithPattern($name, $type, $pattern, $arrayData);
+        if (!is_null($property->getPattern()) && is_null($property->getFormat())) {
+            return $this->generateSimpleDataWithPattern($property, $arrayData);
         }
-        if (is_null($pattern) && !is_null($format)) {
-            return $this->generateSimpleDataWithFormat($name, $type, $format);
+        if (is_null($property->getPattern()) && !is_null($property->getFormat())) {
+            return $this->generateSimpleDataWithFormat($property, $arrayData);
         }
-
     }
 
     private function generateSimpleDataString($name)
     {
-        switch ($name) {
-            case 'name':
-                return $this->faker->name;
-            case 'firstName':
-                return $this->faker->firstName;
-            case 'lastName':
-                return $this->faker->lastName;
-            case 'email':
-                return $this->faker->safeEmail;
-            case 'address':
-                return $this->faker->address;
-            case 'city':
-                return $this->faker->city;
-            case 'streetAddress':
-                return $this->faker->streetAddress;
-            case 'postcode':
-                return $this->faker->postcode;
-            case 'country':
-                return $this->faker->country;
-            case 'phoneNumber':
-                return $this->faker->phoneNumber;
-            default:
-                return $this->faker->sentence($nbWords = 4);
+        try {
+            return $this->faker->{$name};
+        } catch (\InvalidArgumentException $e) {
+            return $this->faker->sentence($nbWords = 4);
         }
     }
 
-    private function generateSimpleDataWithPattern($name, $type, $pattern, array $arrayData)
+    private function generateSimpleDataWithPattern(Property $property, array $arrayData)
     {
-        if ($name === 'email' || $type === 'email') {
-            $splitEmailPattern = explode("@", $pattern);
+        if ($property->getName() === 'email' || $property->getType() === 'email') {
+            $splitEmailPattern = explode("@", $property->getPattern());
             $splitPrefixEmailPattern = explode(".", $splitEmailPattern[0]);
             $prefixMail = '';
             if (count($splitPrefixEmailPattern) < 2) {
@@ -101,12 +82,7 @@ class FakerDataGenerator implements DataGeneratorInterface
             return $prefixMail.'@'.$splitEmailPattern[1];
         }
 
-        return $this->faker->safeEmail;
-    }
-
-    private function generateSimpleDataWithFormat($name, $type, $format)
-    {
-        return "Not Yet Implemented";
+        return $this->faker->email;
     }
 
     private function verifyPatternVariable($variable, array $arrayData)
@@ -118,5 +94,10 @@ class FakerDataGenerator implements DataGeneratorInterface
         if (array_key_exists($variable, $arrayData)) {
             return strtolower($arrayData[$variable]);
         }
+    }
+
+    private function generateSimpleDataWithFormat(Property $property)
+    {
+        return "Not Yet Implemented";
     }
 }

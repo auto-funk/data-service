@@ -11,7 +11,7 @@ interface DataGeneratorInterface
      *
      * @param Model $model
      *
-     * @return array filled
+     * @return array
      */
     public function generateCollection(Model $model);
 }
