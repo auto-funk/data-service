@@ -6,6 +6,7 @@ $app = new Silex\Application();
 
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new KPhoen\Provider\NegotiationServiceProvider());
 
 $app['validator.mapping.class_metadata_factory'] = new Symfony\Component\Validator\Mapping\ClassMetadataFactory(
     new Symfony\Component\Validator\Mapping\Loader\YamlFileLoader(__DIR__ . '/validation.yml')

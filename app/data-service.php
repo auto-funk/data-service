@@ -10,13 +10,6 @@ $app->get('/', function () {
     return 'Hello world!';
 });
 
-$before = function (Request $request) {
-    if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-        $data = json_decode($request->getContent(), true);
-        $request->request->replace(is_array($data) ? $data : array());
-    }
-};
-
 $app->post('/models', function (Request $request) use ($app) {
     $form = $app['form.factory']->create(new ModelType());
     $form->handleRequest($request);
@@ -29,7 +22,7 @@ $app->post('/models', function (Request $request) use ($app) {
     }
 
     return $app->abort(400, $form->getErrorsAsString());
-})->before($before);
+});
 
 // Example
 // Make it generic

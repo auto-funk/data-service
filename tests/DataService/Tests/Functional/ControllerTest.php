@@ -11,7 +11,7 @@ class ControllerTest extends WebTestCase
         $app = require __DIR__ . '/../../../../app/data-service.php';
         $app['debug'] = true;
 
-        return $app;
+        return include __DIR__ . '/../../../../app/stack.php';
     }
 
     public function testPostShouldReturn400IfNoDataProvided()
