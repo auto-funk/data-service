@@ -8,6 +8,8 @@ use DataService\Model\Metadata;
 use DataService\Model\JsonFormat;
 use DataService\Model\YamlModelRepository;
 
+use DataService\Form\Type\ModelType;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
