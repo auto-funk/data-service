@@ -39,10 +39,10 @@ $app->post('/models', function (Request $request) use ($app) {
 
 $app->get('/model', function () {
 
-    $file = new YamlModelRepository("testPersistence");
+    $file = new YamlModelRepository("persistence.don");
     $models = $file->findAll();
 
-    $jsonFormat = new JsonFormat();
+    $jsonFormat = new JsonFormat("modelsJson.json");
     $jsonFormat->putFile($models);
     $contentFile = $jsonFormat->getFile();
 

@@ -1,12 +1,22 @@
 <?php
 
 namespace DataService\Model;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Format the JSON file
  */
 class JsonFormat
 {
+    private $filename;
+
+    public function __construct($filename)
+    {
+        $this->filename = $filename;
+
+        (new Filesystem())->touch($this->filename);
+    }
+
     /**
      * Return a model
      *
@@ -33,11 +43,12 @@ class JsonFormat
         $tabModel = $this->arrayFormat($model);
         $this->deleteFile();
         foreach ($tabModel as $value) {
+            var_dump($value);
             if (is_array($value["properties"]) && is_array($value["metadata"]) && is_array($value["filters"])) {
                 $filters = $this->filtersFormat($value["filters"]);
                 $modele = array('properties' => $value["properties"], 'metadata' => $value["metadata"], 'filters' => $filters);
 
-                file_put_contents("testJSONFile.json", json_encode($this->modelFormat($modele)), FILE_APPEND | LOCK_EX);
+                file_put_contents($this->filename, json_encode($this->modelFormat($modele)), FILE_APPEND | LOCK_EX);
             }
         }
     }
@@ -47,8 +58,8 @@ class JsonFormat
      */
     public function deleteFile()
     {
-        if (file_exists("testJSONFile.json")) {
-            unlink("testJSONFile.json");
+        if (file_exists($this->filename)) {
+            unlink($this->filename);
         }
     }
 
@@ -58,7 +69,7 @@ class JsonFormat
      */
     public function getFile()
     {
-        return file("testJSONFile.json");
+        return file($this->filename);
     }
 
     /**
@@ -93,11 +104,11 @@ class JsonFormat
      */
     public function filtersFormat($tabFilters)
     {
-        $filter = array();
+        $filters = array();
         for ($i = 0 ; $i < count($tabFilters) ; $i++) {
-            $filter[]=array("name" => $tabFilters[$i]);
+            $filters[]=array("name" => $tabFilters[$i]);
         }
 
-        return $filter;
+        return $filters;
     }
 }

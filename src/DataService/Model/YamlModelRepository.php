@@ -69,7 +69,7 @@ class YamlModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * {@inheritDoc}/
+     * {@inheritDoc}
      */
     public function add(Model $model)
     {
