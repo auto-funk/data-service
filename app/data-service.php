@@ -40,9 +40,7 @@ $app->get('/authors', function (Request $request) use ($app) {
         array('firstName' => 'John', 'lastName' => 'Doe', 'email' => 'john.doe@gmail.com'),
     ));
 
-    $format = $app['format.negotiator']->getFormat($request->attributes->get('_mime_type'));
-
-    return $app['serializer']->serialize($data, $format);
+    return $app['serializer']->serialize($data, $request->attributes->get('_format', 'json'));
 });
 
 return $app;

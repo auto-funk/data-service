@@ -1672,12 +1672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/StackNegotiation.git",
-                "reference": "9bfaca60193e80edd5ab6d9039537266b2d40bf6"
+                "reference": "e77a2ceba29c0e4b6cb94fa258c511c489613d1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/StackNegotiation/zipball/9bfaca60193e80edd5ab6d9039537266b2d40bf6",
-                "reference": "9bfaca60193e80edd5ab6d9039537266b2d40bf6",
+                "url": "https://api.github.com/repos/willdurand/StackNegotiation/zipball/e77a2ceba29c0e4b6cb94fa258c511c489613d1b",
+                "reference": "e77a2ceba29c0e4b6cb94fa258c511c489613d1b",
                 "shasum": ""
             },
             "require": {
@@ -1712,7 +1712,7 @@
                 }
             ],
             "description": "Stack middleware for content negotiation.",
-            "time": "2013-12-21 00:26:43"
+            "time": "2013-12-21 01:06:03"
         }
     ],
     "packages-dev": [
