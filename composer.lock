@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "8cc674f95d40cfa7cbccb000e3c3ce0f",
+    "hash": "53f995b6d316cf538c437d2d32bb9399",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1668,7 +1668,7 @@
         },
         {
             "name": "willdurand/stack-negotiation",
-            "version": "dev-master",
+            "version": "0.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/StackNegotiation.git",
@@ -2243,9 +2243,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "willdurand/stack-negotiation": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],
