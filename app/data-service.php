@@ -26,7 +26,7 @@ $app->post('/models', function (Request $request) use ($app) {
 
 // Example
 // Make it generic
-$app->get('/authors', function () use ($app) {
+$app->get('/authors', function (Request $request) use ($app) {
     if (null === $modelAuthor = $app['data_service.repository']->find('authors')) {
         $app->abort(404, sprintf('Model "%s" not found.', '...'));
     }
@@ -40,7 +40,9 @@ $app->get('/authors', function () use ($app) {
         array('firstName' => 'John', 'lastName' => 'Doe', 'email' => 'john.doe@gmail.com'),
     ));
 
-    return $app->json($data);
+    $format = $app['format.negotiator']->getFormat($request->attributes->get('_mime_type'));
+
+    return $app['serializer']->serialize($data, $format);
 });
 
 return $app;

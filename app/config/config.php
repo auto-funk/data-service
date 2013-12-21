@@ -16,4 +16,8 @@ $app['data_service.repository'] = $app->share(function () {
     return new DataService\Model\InMemoryModelRepository(require __DIR__ . '/fixtures.php');
 });
 
+$app['serializer'] = $app->share(function () {
+    return JMS\Serializer\SerializerBuilder::create()->build();
+});
+
 return $app;
