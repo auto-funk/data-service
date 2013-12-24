@@ -11,6 +11,7 @@ return array(
             new Property('firstName', 'string'),
             new Property('lastName', 'string'),
             new Property('email', 'string', null, '{firstName}.{lastName}@gmail.com'),
+            new Property('birthDate', 'string', null, null, 'd-M-y'),
         )
     ),
     new Model(

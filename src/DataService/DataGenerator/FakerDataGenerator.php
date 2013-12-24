@@ -24,7 +24,6 @@ class FakerDataGenerator implements DataGeneratorInterface
         $arrayData = array();
         for ($i = 0 ; $i < count($properties) ; $i ++) {
             $valueProperty = $this->generateData($properties[$i], $arrayData);
-
             $arrayData[$properties[$i]->getName()] = $valueProperty;
         }
 
@@ -46,8 +45,10 @@ class FakerDataGenerator implements DataGeneratorInterface
             return $this->generateSimpleDataWithPattern($property, $arrayData);
         }
         if (is_null($property->getPattern()) && !is_null($property->getFormat())) {
-            return $this->generateSimpleDataWithFormat($property, $arrayData);
+            return $this->generateSimpleDataWithFormat($property);
         }
+
+        return $this->faker->sentence($nbWords = 4);
     }
 
     private function generateSimpleDataString($name)
@@ -81,6 +82,63 @@ class FakerDataGenerator implements DataGeneratorInterface
 
     private function generateSimpleDataWithFormat(Property $property)
     {
-        return "Not Yet Implemented";
+        if ('birthDate' === $property->getName() || 'birthdate' === $property->getName()) {
+            return $this->generateBirthDate($property->getFormat());
+        }
+
+        return $this->faker->sentence($nbWords = 4);
+    }
+
+    private function generateBirthDate($format)
+    {
+        date_default_timezone_set('UTC');
+        $day = $this->faker->dayOfMonth;
+        $month = $this->faker->month;
+        $year = $this->faker->year;
+        $finalValue = '';
+        if (strpos($format, '-')) {
+            $separator = '-';
+            $date = mb_split('-', $format);
+        }
+        if (strpos($format, '/')) {
+            $separator = '/';
+            $date = mb_split('/', $format);
+        }
+        if (strpos($format, ':')) {
+            $separator = ':';
+            $date = mb_split(':', $format);
+        }
+        if (0 === stripos($date[0], 'y')) {
+            $finalValue .= $year;
+        }
+        if (0 === stripos($date[0], 'm')) {
+            $finalValue .= $month;
+        }
+        if (0 === stripos($date[0], 'd')) {
+            $finalValue .= $day;
+        }
+        $finalValue .= $separator;
+        if (0 === stripos($date[1], 'y')) {
+            $finalValue .= $year;
+        }
+        if (0 === stripos($date[1], 'm')) {
+            $finalValue .= $month;
+        }
+        if (0 === stripos($date[1], 'd')) {
+            $finalValue .= $day;
+        }
+        $finalValue .= $separator;
+        if (0 === stripos($date[2], 'y')) {
+            $finalValue .= $year;
+        }
+        if (0 === stripos($date[2], 'm')) {
+            $finalValue .= $month;
+        }
+        if (0 === stripos($date[2], 'd')) {
+            $finalValue .= $day;
+        }
+
+        return $finalValue;
+
     }
 }
