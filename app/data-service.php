@@ -2,7 +2,14 @@
 
 $app = require __DIR__ . '/config/config.php';
 
+use DataService\Model\Property;
+use DataService\Model\Model;
+use DataService\Model\Metadata;
+use DataService\Model\JsonFormat;
+use DataService\Model\YamlModelRepository;
+
 use DataService\Form\Type\ModelType;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,11 +32,30 @@ $app->post('/models', function (Request $request) use ($app) {
         $data = $form->getData();
 
         //Save in database
+        $file = new YamlModelRepository("persistence.don");
+        $models = $file->add($data);
+
         return new Response(null, 201);
     }
 
     return $app->abort(400, $form->getErrorsAsString());
 })->before($before);
+
+
+$app->get('/model', function () {
+
+    $file = new YamlModelRepository("persistence.don");
+    $models = $file->findAll();
+
+    $jsonFormat = new JsonFormat("modelsJson.json");
+    $jsonFormat->putFile($models);
+    $contentFile = $jsonFormat->getFile();
+
+    $response = new Response(json_encode($contentFile));
+    $response->headers->set('Content-Type', 'application/json');
+
+    return $response;
+});
 
 // Example
 // Make it generic
@@ -49,5 +75,6 @@ $app->get('/authors', function () use ($app) {
 
     return $app->json($data);
 });
+
 
 return $app;

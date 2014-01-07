@@ -27,6 +27,11 @@ class Model
         return $this->metadata->getName();
     }
 
+    public function getDescription()
+    {
+        return $this->metadata->getDescription();
+    }
+
     public function getFilters()
     {
         return $this->filters;
@@ -40,5 +45,10 @@ class Model
     public function getProperty($key, $default = null)
     {
         return isset($this->properties[$key]) ? $this->properties[$key] : $default;
+    }
+
+    public function isEqualTo($name)
+    {
+        return $this->getName() === $name;
     }
 }
