@@ -43,7 +43,6 @@ class JsonFormat
         $tabModel = $this->arrayFormat($model);
         $this->deleteFile();
         foreach ($tabModel as $value) {
-            var_dump($value);
             if (is_array($value["properties"]) && is_array($value["metadata"]) && is_array($value["filters"])) {
                 $filters = $this->filtersFormat($value["filters"]);
                 $modele = array('properties' => $value["properties"], 'metadata' => $value["metadata"], 'filters' => $filters);

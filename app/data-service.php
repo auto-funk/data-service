@@ -32,6 +32,9 @@ $app->post('/models', function (Request $request) use ($app) {
         $data = $form->getData();
 
         //Save in database
+        $file = new YamlModelRepository("persistence.don");
+        $models = $file->add($data);
+
         return new Response(null, 201);
     }
 
