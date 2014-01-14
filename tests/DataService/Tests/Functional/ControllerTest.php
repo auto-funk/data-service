@@ -11,7 +11,7 @@ class ControllerTest extends WebTestCase
         $app = require __DIR__ . '/../../../../app/data-service.php';
         $app['debug'] = true;
 
-        return $app;
+        return include __DIR__ . '/../../../../app/stack.php';
     }
 
     public function testPostShouldReturn400IfNoDataProvided()
@@ -161,4 +161,34 @@ JSON
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
+    public function testGetBooksInJson()
+    {
+        $client  = $this->createClient();
+        $client->request('GET', '/books', array(), array(), array(
+            'HTTP_Accept'  => 'application/json'
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
+    }
+
+   public function testGetBooksInXml()
+    {
+        $client  = $this->createClient();
+        $client->request('GET', '/books', array(), array(), array(
+            'HTTP_Accept'  => 'application/xml'
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testGetNonExistingModel()
+    {
+        $client  = $this->createClient();
+        $client->request('GET', '/non', array(), array(), array(
+            'HTTP_Accept'  => 'application/json'
+        ));
+
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
 }
