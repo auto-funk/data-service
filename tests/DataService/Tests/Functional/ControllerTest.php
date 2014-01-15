@@ -191,4 +191,12 @@ JSON
 
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
+
+    public function testGetIndex()
+    {
+        $client  = $this->createClient();
+        $client->request('GET', '/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
 }

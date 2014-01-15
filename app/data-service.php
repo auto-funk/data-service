@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $app->get('/', function () {
-    return 'Hello world!';
+    require 'resources/index.html';
+
+    return new Response("", 200);
 });
 
 $before = function (Request $request) {
