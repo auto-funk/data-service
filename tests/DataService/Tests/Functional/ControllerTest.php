@@ -172,7 +172,7 @@ JSON
         $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
     }
 
-   public function testGetBooksInXml()
+    public function testGetBooksInXml()
     {
         $client  = $this->createClient();
         $client->request('GET', '/books', array(), array(), array(
