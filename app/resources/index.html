@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'/>
+</head>
+<body>
+    <header>
+        <h1>Data Generator</h1>
+    </header>
+    <section id='explanation'>
+        <h2>What is DataGenerator?</h2>
+        <p>
+            DataGenerator provides you to create randomly entities.
+            You can add models which will be saved and reused to create data.
+        </p>
+
+        <h2>What can it generate?</h2>
+        <p>
+            DataGenerator is able to generate random data for all the model already saved.
+        </p>
+
+        <h2>Add model to database</h2>
+        <p>
+            To create entities, you have to write a json request like this :<br/>
+            <pre>
+    {
+        "model": {
+            "properties": [
+                {
+                    "name": "firstName",
+                    "type": "string"
+                },
+                {
+                    "name": "lastName",
+                    "type": "string",
+                    "description": "Nom de la personne"
+                },
+                {
+                    "name": "age",
+                    "type": "integer"
+                }
+            ],
+            "metadata": {
+                "name": "People",
+                "description": "Des personnes"
+            }
+        }
+    }</pre>
+        </p>
+
+        <h2>List all models</h2>
+        <p>
+            When you add a model with the POST method, it is added too in the the database.<br/>
+            To see the model list, you have to use this :
+            <pre>
+    http://33.33.33.10.xip.io/model
+            </pre>
+        </p>
+        <p>
+            The application will provide you a JSON object like this:
+            <h3>Model</h3>
+            <pre>
+    {
+	    "model": {
+    		"properties": [
+                {
+                    "name":"name2",
+                    "type":"string",
+                    "description":"description name2",
+                    "pattern":"pattern2",
+                    "format":null
+			    },
+                {
+                    "name":"name22",
+                    "type":"string",
+                    "description":"description name22",
+                    "pattern":"pattern22",
+                    "format":null
+                }
+		    ],
+            "metadata": {
+                "name":"Tutu",
+                "description":null
+            },
+            "filters": [
+                {
+                    "name":"filter tu"
+                },
+                {
+                    "name":"filter tututututu"
+                }
+            ]
+	    }
+    }
+    {
+	    "model": {
+		    "properties": [
+                {
+                    "name":"name1",
+                    "type":"string",
+                    "description":"description name1",
+                    "pattern":"pattern1",
+                    "format":null
+                }
+            ],
+            "metadata": {
+                "name":"Tata",
+                "description":"description de tata"
+            },
+            "filters": [
+                {
+                    "name":"filter taa"
+                }
+            ]
+        }
+    }</pre>
+        </p>
+
+        <h2>Generate entities</h2>
+        <p>
+            To generate entities, you need a model already saved in the database.
+            You need to add the model name in the URL like this for the author model:
+            <pre>
+    http://33.33.33.10.xip.io/authors
+            </pre>
+        </p>
+        <p>
+            The application will provide you a JSON or XML object.
+            <h3>Author</h3>
+            <pre>
+    {
+        "firstName":"Jacques",
+        "lastName":"Lefevre",
+        "email":"jacques.lefevre@gmail.com",
+        "birthDate":"09-06-1988"
+    }
+            </pre>
+        </p>
+    </section>
+</body>
+</html>
