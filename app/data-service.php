@@ -7,9 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $app->get('/', function () {
-    require 'resources/index.html';
-
-    return new Response("", 200);
+    return new Response(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'resources/index.html'));
 });
 
 $before = function (Request $request) {
