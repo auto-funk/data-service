@@ -1,0 +1,10 @@
+-
+    name: Tutu
+    description: null
+    properties: [{ name: name2, type: string, description: 'description name2', pattern: pattern2, format: null }, { name: name22, type: string, description: 'description name22', pattern: pattern22, format: null }]
+    filters: ['filter tu', 'filter tututututu']
+-
+    name: Authentification
+    description: 'Test de la description'
+    properties: [{ name: login, type: string, description: 'description login', pattern: pattern1, format: null }, { name: password, type: string, description: 'description password', pattern: pattern2, format: null }]
+    filters: ['filter auth']

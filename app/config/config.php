@@ -15,4 +15,8 @@ $app['data_service.repository'] = $app->share(function () {
     return new DataService\Model\InMemoryModelRepository(require __DIR__ . '/fixtures.php');
 });
 
+$app['data_service.persistence'] = $app->share(function () {
+    return new DataService\Model\YamlModelRepository(__DIR__ . '/persistence.yml');
+});
+
 return $app;

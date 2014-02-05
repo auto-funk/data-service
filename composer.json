@@ -8,7 +8,8 @@
         "kphoen/faker-service-provider": "~1.0",
         "symfony/validator": "~2.3",
         "symfony/form": "~2.3",
-        "symfony/filesystem": "2.5.*@dev"
+        "symfony/filesystem": "2.5.*@dev",
+        "jms/serializer": "~0.13"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7",

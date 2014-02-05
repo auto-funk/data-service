@@ -3,7 +3,9 @@
 $app = require __DIR__ . '/config/config.php';
 
 use DataService\Model\Property;
+
 use DataService\Model\Model;
+
 use DataService\Model\Metadata;
 use DataService\Model\JsonFormat;
 use DataService\Model\YamlModelRepository;
@@ -32,8 +34,7 @@ $app->post('/models', function (Request $request) use ($app) {
         $data = $form->getData();
 
         //Save in database
-        $file = new YamlModelRepository("persistence.don");
-        $models = $file->add($data);
+        $models =  $app['data_service.persistence']->add($data);
 
         return new Response(null, 201);
     }
@@ -42,23 +43,14 @@ $app->post('/models', function (Request $request) use ($app) {
 })->before($before);
 
 
-$app->get('/model', function () {
-
-    $file = new YamlModelRepository("persistence.don");
-    $models = $file->findAll();
-
-    $jsonFormat = new JsonFormat("modelsJson.json");
-    $jsonFormat->putFile($models);
-    $contentFile = $jsonFormat->getFile();
-
-    $response = new Response(json_encode($contentFile));
-    $response->headers->set('Content-Type', 'application/json');
-
-    return $response;
+$app->get('/model', function (Request $request) use ($app){
+    $app['serializer'] = JMS\Serializer\SerializerBuilder::create()->build();
+    $data = $app['data_service.persistence']->findAll();
+    return $app['serializer']->serialize($data, $request->attributes->get('_format', 'json'));
 });
 
 // Example
-// Make it generic
+/*// Make it generic
 $app->get('/authors', function () use ($app) {
     if (null === $modelAuthor = $app['data_service.repository']->find('authors')) {
         $app->abort(404, sprintf('Model "%s" not found.', '...'));
@@ -74,7 +66,7 @@ $app->get('/authors', function () use ($app) {
     ));
 
     return $app->json($data);
-});
+});*/
 
 
 return $app;
